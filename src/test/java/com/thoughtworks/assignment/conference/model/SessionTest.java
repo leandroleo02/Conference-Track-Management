@@ -29,6 +29,16 @@ public class SessionTest {
 	}
 
 	@Test
+	public void testSessionCreatedWithTolerance() {
+		LocalTime start = LocalTime.of(9, 0);
+		LocalTime finish = LocalTime.of(12, 0);
+		int tolerance = 60;
+
+		Session session = new Session(start, finish, tolerance);
+		assertThat("Session tolerance is wrong", session.getToleranceMinutesToFinish(), equalTo(60));
+	}
+
+	@Test
 	public void testAddTalk() {
 		Talk talk = new Talk("Any talk", 20);
 
@@ -62,5 +72,14 @@ public class SessionTest {
 		Talk talk2 = new Talk("Another talk", 50);
 
 		return Arrays.asList(talk1, talk2);
+	}
+
+	@Test
+	public void testTotalDurationInMinutes() {
+		LocalTime start = LocalTime.of(9, 0);
+		LocalTime finish = LocalTime.of(12, 0);
+		Session session = new Session(start, finish);
+
+		assertThat("Session total duration is wrong", session.getTotalDurationInMinutes(), equalTo(180L));
 	}
 }
