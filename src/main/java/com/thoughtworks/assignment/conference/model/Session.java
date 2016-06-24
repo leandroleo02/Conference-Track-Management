@@ -5,36 +5,22 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.thoughtworks.assignment.conference.Knapsack;
+
 /**
  * A class that represents a session in a conference. A session starts and ends
- * in a specific time. Besides, a it has a bunch of {@link Talk} that will happens
- * in this period.
+ * in a specific time. Besides, a it has a bunch of {@link Talk} that will
+ * happens in this period.
  */
 public class Session {
 
-	/**
-	 * Represents a Morning session, 9:00AM - 12:00 noon
-	 */
-	public static final Session MORNING = new Session(LocalTime.of(9, 0), LocalTime.of(12, 0));
-
-	/**
-	 * Represents a Afternoon session - 1:00PM - 4:00PM. Having a tolerance of 60 minutes.
-	 */
-	public static final Session AFTERNOON = new Session(LocalTime.of(13, 0), LocalTime.of(16, 0), 60);
-
 	private LocalTime start;
 	private LocalTime finish;
-	private int toleranceMinutesToFinish;
 	private List<Talk> talks;
 
 	public Session(LocalTime start, LocalTime finish) {
 		this.start = start;
 		this.finish = finish;
-	}
-
-	public Session(LocalTime start, LocalTime finish, int toleranceMinutesToFinish) {
-		this(start, finish);
-		this.toleranceMinutesToFinish = toleranceMinutesToFinish;
 	}
 
 	public LocalTime getStart() {
@@ -43,10 +29,6 @@ public class Session {
 
 	public LocalTime getFinish() {
 		return finish;
-	}
-
-	public int getToleranceMinutesToFinish() {
-		return toleranceMinutesToFinish;
 	}
 
 	public long getTotalDurationInMinutes() {
@@ -67,5 +49,22 @@ public class Session {
 			this.talks = new ArrayList<Talk>();
 		}
 		this.talks.add(talk);
+	}
+
+	public void schedule(List<Talk> validTalks) {
+		int w = (int) Duration.between(start, finish).toMinutes();
+		int n = validTalks.size();
+
+		int[] profit = new int[n + 1];
+		int[] weight = new int[n + 1];
+
+		int i = 0;
+		// fill the profit and weight
+		for (Talk talk : validTalks) {
+			profit[i] = weight[i] = talk.getDuration();
+			i++;
+		}
+		
+		Knapsack.knapSack(w, weight, profit, n);
 	}
 }

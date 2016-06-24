@@ -29,16 +29,6 @@ public class SessionTest {
 	}
 
 	@Test
-	public void testSessionCreatedWithTolerance() {
-		LocalTime start = LocalTime.of(9, 0);
-		LocalTime finish = LocalTime.of(12, 0);
-		int tolerance = 60;
-
-		Session session = new Session(start, finish, tolerance);
-		assertThat("Session tolerance is wrong", session.getToleranceMinutesToFinish(), equalTo(60));
-	}
-
-	@Test
 	public void testAddTalk() {
 		Talk talk = new Talk("Any talk", 20);
 
