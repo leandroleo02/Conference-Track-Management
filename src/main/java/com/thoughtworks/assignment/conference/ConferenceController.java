@@ -21,32 +21,15 @@ public class ConferenceController {
 
 		populateValidTalks(proposalsList);
 		List<Track> tracks = new ArrayList<Track>();
-		while (validTalks.size() > 0) {
+		while (!this.validTalks.isEmpty()) {
 			Track track = new Track();
 			tracks.add(track);
 
-			Session morningSession = SessionHelper.createMorningSession();
-			track.addSession(morningSession);
-			if (!validTalks.isEmpty()) {
-				morningSession.schedule(validTalks);
-			}
-
-			Session lunchSession = SessionHelper.createLunchSession();
-			track.addSession(lunchSession);
-			if (!validTalks.isEmpty()) {
-				lunchSession.schedule(validTalks);
-			}
-
-			Session afternoonSession = SessionHelper.createAfternoonSession();
-			track.addSession(afternoonSession);
-			if (!validTalks.isEmpty()) {
-				afternoonSession.schedule(validTalks);
-			}
-
-			Session networkingSession = SessionHelper.createNetworkingSession();
-			track.addSession(networkingSession);
-			if (!validTalks.isEmpty()) {
-				networkingSession.schedule(validTalks);
+			for(Session session : SessionHelper.getDefaultSessions()) {
+				track.addSession(session);
+				if (!this.validTalks.isEmpty()) {
+					session.scheduleTalks(this.validTalks);
+				}
 			}
 		}
 		return tracks;
@@ -57,14 +40,14 @@ public class ConferenceController {
 			return;
 		}
 
-		validTalks = new ArrayList<Talk>();
+		this.validTalks = new ArrayList<Talk>();
 		for (String talk : proposalsList) {
 			Pattern pattern = Pattern.compile("(.*)(\\s){1}([0-2]?[0-9]?[0-9]{1}min|lightning)\\b");
 			Matcher matcher = pattern.matcher(talk);
 			if (matcher.matches()) {
 				String durationStr = matcher.group(3);
 				int talkDuration = extractTalkDuration(durationStr);
-				validTalks.add(new Talk(matcher.group(1), talkDuration));
+				this.validTalks.add(new Talk(matcher.group(1), talkDuration));
 			}
 		}
 	}

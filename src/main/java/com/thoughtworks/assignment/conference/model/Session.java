@@ -3,6 +3,7 @@ package com.thoughtworks.assignment.conference.model;
 import java.time.Duration;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.thoughtworks.assignment.conference.Knapsack;
@@ -51,20 +52,54 @@ public class Session {
 		this.talks.add(talk);
 	}
 
-	public void schedule(List<Talk> validTalks) {
-		int w = (int) Duration.between(start, finish).toMinutes();
-		int n = validTalks.size();
+	/***
+	 * Fits the Talks in the Session using the Knapsack algorithm, and updates the given talks list.
+	 *
+	 * @param talks
+	 */
+	public void scheduleTalks(List<Talk> talks) {
+		int W = (int) Duration.between(start, finish).toMinutes();
+		int N = talks.size();
 
-		int[] profit = new int[n + 1];
-		int[] weight = new int[n + 1];
+		int[] value = new int[N + 1];
+		int[] weight = new int[N + 1];
 
 		int i = 0;
 		// fill the profit and weight
-		for (Talk talk : validTalks) {
-			profit[i] = weight[i] = talk.getDuration();
+		for (Talk talk : talks) {
+			value[i] = weight[i] = talk.getDuration();
 			i++;
 		}
-		
-		Knapsack.knapSack(w, weight, profit, n);
+
+		boolean[] taked = Knapsack.solve(W, weight, value, N);
+		updateTakedTalks(talks, taked);
+	}
+
+	/**
+	 * Update the given talks list according the taked flag, and add the talks in the session.
+	 *
+	 * @param talks
+	 * @param taked
+	 */
+	private void updateTakedTalks(List<Talk> talks, boolean[] taked) {
+		Iterator<Talk> iterator = talks.iterator();
+		int i = 0;
+		while(iterator.hasNext()) {
+			if(taked[i]) {
+				// add the talk in the session and remote from the original list.
+				this.addTalk(iterator.next());
+				iterator.remove();
+			}
+		}
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for(Talk talk : this.talks) {
+			sb.append(talk);
+			sb.append('\n');
+		}
+		return sb.toString();
 	}
 }

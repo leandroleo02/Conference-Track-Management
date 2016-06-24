@@ -13,4 +13,14 @@ public class Track {
 		}
 		this.sessions.add(session);
 	}
+
+	@Override
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		for (Session session : this.sessions) {
+			sb.append(session);
+			sb.append('\n');
+		}
+		return sb.toString();
+	}
 }
