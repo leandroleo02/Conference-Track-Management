@@ -32,6 +32,6 @@ public final class SessionHelper {
 	 * Represents a Afternoon session - 1:00PM - 5:00PM.
 	 */
 	public static Session createAfternoonSession() {
-		return new Session(LocalTime.of(13, 0), LocalTime.of(16, 0));
+		return new Session(LocalTime.of(13, 0), LocalTime.of(17, 0));
 	}
 }
