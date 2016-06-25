@@ -9,17 +9,15 @@ import com.thoughtworks.assignment.conference.model.Track;
 public class Conference {
 
 	public static void main(String[] args) {
-		String fileName = args[0];
-
-		if (fileName == null) {
+		if (args.length == 0 || args[0].isEmpty()) {
 			// TODO: mensagem nome do arquivo não informado.
 		} else {
 			try {
 				InputFileReader reader = new InputFileReader();
+				String fileName = args[0];
 				List<String> talks = reader.readFile(fileName);
 				ConferenceController conferenceController = new ConferenceController();
-				List<Track> trackList = conferenceController
-						.getTrackList(talks);
+				List<Track> trackList = conferenceController.getTrackList(talks);
 				printResults(trackList);
 			} catch (FileNotFoundException e) {
 				// TODO: mensagem arquivo não encontrado

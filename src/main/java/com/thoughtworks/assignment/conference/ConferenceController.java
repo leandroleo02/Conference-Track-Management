@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import com.thoughtworks.assignment.conference.model.Session;
 import com.thoughtworks.assignment.conference.model.Talk;
+import com.thoughtworks.assignment.conference.model.TalkSession;
 import com.thoughtworks.assignment.conference.model.Track;
 
 public class ConferenceController {
@@ -25,10 +26,12 @@ public class ConferenceController {
 			Track track = new Track();
 			tracks.add(track);
 
-			for(Session session : SessionHelper.getDefaultSessions()) {
+			for (Session session : SessionHelper.getDefaultSessions()) {
 				track.addSession(session);
-				if (!this.validTalks.isEmpty()) {
-					session.scheduleTalks(this.validTalks);
+				if (session instanceof TalkSession) {
+					if (!this.validTalks.isEmpty()) {
+						((TalkSession) session).scheduleTalks(this.validTalks);
+					}
 				}
 			}
 		}

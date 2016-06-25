@@ -23,7 +23,7 @@ public class SessionTest {
 		LocalTime start = LocalTime.of(9, 0);
 		LocalTime finish = LocalTime.of(12, 0);
 
-		Session session = new Session(start, finish);
+		TalkSession session = new TalkSession(start, finish);
 		assertThat("Session start is wrong", session.getStart(), equalTo(start));
 		assertThat("Session finish is wrong", session.getFinish(), equalTo(finish));
 	}
@@ -34,7 +34,7 @@ public class SessionTest {
 
 		LocalTime start = LocalTime.of(9, 0);
 		LocalTime finish = LocalTime.of(12, 0);
-		Session session = new Session(start, finish);
+		TalkSession session = new TalkSession(start, finish);
 
 		session.addTalk(talk);
 
@@ -48,7 +48,7 @@ public class SessionTest {
 
 		LocalTime start = LocalTime.of(9, 0);
 		LocalTime finish = LocalTime.of(12, 0);
-		Session session = new Session(start, finish);
+		TalkSession session = new TalkSession(start, finish);
 
 		List<Talk> talks = createTalks();
 		session.setTalks(talks);
@@ -68,7 +68,7 @@ public class SessionTest {
 	public void testTotalDurationInMinutes() {
 		LocalTime start = LocalTime.of(9, 0);
 		LocalTime finish = LocalTime.of(12, 0);
-		Session session = new Session(start, finish);
+		Session session = new TalkSession(start, finish);
 
 		assertThat("Session total duration is wrong", session.getTotalDurationInMinutes(), equalTo(180L));
 	}

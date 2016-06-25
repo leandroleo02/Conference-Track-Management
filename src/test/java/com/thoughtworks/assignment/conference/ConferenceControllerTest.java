@@ -23,12 +23,16 @@ public class ConferenceControllerTest {
 	@Test
 	public void test() throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
-		String file = classLoader.getResource("testProposalsTalks.properties").getFile();
+		String file = classLoader.getResource("testProposalsTalks.txt").getFile();
 
 		InputFileReader reader = new InputFileReader();
 
 		List<String> talks = reader.readFile(file);
 		List<Track> trackList = controller.getTrackList(talks);
 		assertThat("Talks can't be empty", trackList.size(), equalTo(2));
+		
+		for (Track track : trackList) {
+			System.out.println(track);
+		}
 	}
 }
