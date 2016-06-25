@@ -70,8 +70,20 @@ public class Session {
 	 * @param scheduledTalks
 	 */
 	private void updateTalks(List<Talk> talks, List<Talk> scheduledTalks) {
-		setTalks(scheduledTalks);
+		// remove these talks from the original list
 		talks.removeAll(scheduledTalks);
+		// calculates the start time of the scheduled talks.
+		for (int i = 0; i < scheduledTalks.size(); i++) {
+			Talk talk = scheduledTalks.get(i);
+			if (i == 0) {
+				talk.setStart(getStart());
+			} else {
+				Talk previous = scheduledTalks.get(i - 1);
+				talk.setStart(previous.getFinish());
+			}
+		}
+
+		setTalks(scheduledTalks);
 	}
 
 	@Override

@@ -1,12 +1,15 @@
 package com.thoughtworks.assignment.conference.model;
 
+import java.time.LocalTime;
+
 /**
- * A immutable class that represents the talk in a conference.
+ * A class that represents the talk in a conference.
  */
 public class Talk {
 
 	private String title;
 	private int duration;
+	private LocalTime start;
 
 	public Talk(String title, int duration) {
 		this.title = title;
@@ -19,6 +22,18 @@ public class Talk {
 
 	public int getDuration() {
 		return duration;
+	}
+	
+	public LocalTime getStart() {
+		return start;
+	}
+
+	public void setStart(LocalTime start) {
+		this.start = start;
+	}
+	
+	public LocalTime getFinish() {
+		return this.start.plusMinutes(this.duration);
 	}
 
 	@Override
@@ -51,6 +66,6 @@ public class Talk {
 
 	@Override
 	public String toString() {
-		return String.format("%s %d min", title, duration);
+		return String.format("%s %s %d min", start, title, duration);
 	}
 }

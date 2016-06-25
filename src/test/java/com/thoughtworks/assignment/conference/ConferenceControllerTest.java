@@ -30,9 +30,5 @@ public class ConferenceControllerTest {
 		List<String> talks = reader.readFile(file);
 		List<Track> trackList = controller.getTrackList(talks);
 		assertThat("Talks can't be empty", trackList.size(), equalTo(2));
-		
-		for(Track track : trackList) {
-			System.out.println(track);
-		}
 	}
 }
