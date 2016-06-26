@@ -1,7 +1,6 @@
 package com.thoughtworks.assignment.conference.model;
 
 import java.time.LocalTime;
-import java.util.ArrayList;
 import java.util.List;
 
 import com.thoughtworks.assignment.conference.Knapsack;
@@ -9,11 +8,11 @@ import com.thoughtworks.assignment.conference.Knapsack;
 public class TalkSession extends Session {
 
 	private List<Talk> talks;
-	
+
 	public TalkSession(LocalTime start, LocalTime finish) {
 		super(start, finish);
 	}
-	
+
 	public List<Talk> getTalks() {
 		return talks;
 	}
@@ -22,36 +21,16 @@ public class TalkSession extends Session {
 		this.talks = talks;
 	}
 
-	public void addTalk(Talk talk) {
-		if (this.talks == null) {
-			this.talks = new ArrayList<Talk>();
-		}
-		this.talks.add(talk);
-	}
-	
 	public LocalTime getRealFinishTime() {
 		int talksDuration = this.talks.stream().mapToInt(Talk::getDuration).sum();
 		return this.getStart().plusMinutes(talksDuration);
 	}
 
-	/***
-	 * Fits the Talks in the Session using the Knapsack algorithm, and updates
-	 * the given talks list.
-	 *
-	 * @param talks
-	 */
 	public void scheduleTalks(List<Talk> talks) {
 		List<Talk> scheduledTalks = Knapsack.solve(this, talks);
 		updateTalks(talks, scheduledTalks);
 	}
 
-	/**
-	 * Update the given talks list according the taked flag, and add the talks
-	 * in the session.
-	 *
-	 * @param talks
-	 * @param scheduledTalks
-	 */
 	private void updateTalks(List<Talk> talks, List<Talk> scheduledTalks) {
 		// remove these talks from the original list
 		talks.removeAll(scheduledTalks);

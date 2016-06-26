@@ -14,6 +14,10 @@ public class Track {
 		this.sessions.add(session);
 	}
 
+	public List<Session> getSessions() {
+		return sessions;
+	}
+
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();

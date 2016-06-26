@@ -1,5 +1,6 @@
 package com.thoughtworks.assignment.conference;
 
+import static org.hamcrest.core.IsEqual.equalTo;
 import static org.hamcrest.core.IsNot.not;
 import static org.hamcrest.core.IsNull.notNullValue;
 import static org.junit.Assert.assertThat;
@@ -23,10 +24,11 @@ public class InputFileReaderTest {
 	public void testNonEmptyFile() throws IOException {
 		
 		ClassLoader classLoader = getClass().getClassLoader();
-		String file = classLoader.getResource("testProposalsTalks.properties").getFile();
+		String file = classLoader.getResource("testProposalsTalks.txt").getFile();
 		
 		List<String> talks = this.reader.readFile(file);
 		assertThat("Talks can't be null", talks, notNullValue());
 		assertThat("Talks can't be empty", talks.size(), not(0));
+		assertThat("Talks should have size 19", talks.size(), equalTo(19));
 	}
 }

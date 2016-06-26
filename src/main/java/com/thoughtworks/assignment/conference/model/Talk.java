@@ -2,9 +2,6 @@ package com.thoughtworks.assignment.conference.model;
 
 import java.time.LocalTime;
 
-/**
- * A class that represents the talk in a conference.
- */
 public class Talk {
 
 	private String title;
@@ -27,7 +24,7 @@ public class Talk {
 	public LocalTime getStart() {
 		return start;
 	}
-
+	
 	public void setStart(LocalTime start) {
 		this.start = start;
 	}

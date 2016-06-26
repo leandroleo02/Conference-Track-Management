@@ -21,7 +21,7 @@ public class ConferenceControllerTest {
 	}
 
 	@Test
-	public void test() throws IOException {
+	public void testWithDefaultFile() throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String file = classLoader.getResource("testProposalsTalks.txt").getFile();
 
@@ -29,10 +29,6 @@ public class ConferenceControllerTest {
 
 		List<String> talks = reader.readFile(file);
 		List<Track> trackList = controller.getTrackList(talks);
-		assertThat("Talks can't be empty", trackList.size(), equalTo(2));
-		
-		for (Track track : trackList) {
-			System.out.println(track);
-		}
+		assertThat("Tracks should have size 2", trackList.size(), equalTo(2));
 	}
 }
