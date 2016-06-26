@@ -1,9 +1,11 @@
+
 package com.thoughtworks.assignment.conference.model;
 
 import java.time.Duration;
 import java.time.LocalTime;
+import java.util.Observable;
 
-public abstract class Session {
+public abstract class Session extends Observable {
 
 	private LocalTime start;
 	private LocalTime finish;
@@ -15,6 +17,10 @@ public abstract class Session {
 
 	public LocalTime getStart() {
 		return start;
+	}
+
+	protected void setStart(LocalTime start) {
+		this.start = start;
 	}
 
 	public LocalTime getFinish() {

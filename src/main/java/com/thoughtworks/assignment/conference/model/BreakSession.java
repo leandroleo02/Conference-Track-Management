@@ -1,8 +1,10 @@
 package com.thoughtworks.assignment.conference.model;
 
 import java.time.LocalTime;
+import java.util.Observable;
+import java.util.Observer;
 
-public class BreakSession extends Session {
+public class BreakSession extends Session implements Observer {
 
 	public enum BreakSessionType {
 		LUNCH("Lunch"), NETWORKING("Networking Event");
@@ -32,5 +34,18 @@ public class BreakSession extends Session {
 	@Override
 	public String toString() {
 		return String.format("%s %s", getStart(), type.getDescription());
+	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (o instanceof TalkSession) {
+			if (type == BreakSessionType.NETWORKING) {
+				// The networking can't start before 4:00PM
+				LocalTime realFinishTime = ((TalkSession) o).getRealFinishTime();
+				if (realFinishTime.isAfter(getStart())) {
+					setStart(realFinishTime);
+				}
+			}
+		}
 	}
 }

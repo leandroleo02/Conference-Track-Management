@@ -9,8 +9,9 @@ import org.apache.log4j.Logger;
 import com.thoughtworks.assignment.conference.model.Track;
 
 /**
- * TODO: criar README. TODO: rever testes. TODO: rever codigo. TODO: rever hora
- * inicio networking
+ * TODO: criar README. 
+ * TODO: rever testes. 
+ * TODO: rever codigo. 
  */
 public class Conference {
 

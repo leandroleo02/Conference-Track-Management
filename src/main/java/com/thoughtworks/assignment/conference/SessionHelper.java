@@ -18,7 +18,14 @@ public final class SessionHelper {
 	}
 
 	public static List<Session> getDefaultSessions() {
-		return Arrays.asList(createMorningSession(), createLunchSession(), createAfternoonSession(), createNetworkingSession());
+		Session morningSession = createMorningSession();
+		Session lunchSession = createLunchSession();
+		Session afternoonSession = createAfternoonSession();
+		Session networkingSession = createNetworkingSession();
+		
+		afternoonSession.addObserver((BreakSession) networkingSession);
+		
+		return Arrays.asList(morningSession, lunchSession, afternoonSession, networkingSession);
 	}
 
 	public static Session createMorningSession() {

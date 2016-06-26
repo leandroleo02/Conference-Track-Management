@@ -39,6 +39,8 @@ public class TalkSession extends Session {
 		talks.removeAll(selectedTalks);
 		calculateTalkStartTime(selectedTalks);
 		setTalks(selectedTalks);
+		setChanged();
+		notifyObservers();
 	}
 
 	private void calculateTalkStartTime(List<Talk> scheduledTalks) {

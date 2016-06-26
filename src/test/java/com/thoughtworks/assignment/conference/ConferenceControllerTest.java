@@ -35,6 +35,13 @@ public class ConferenceControllerTest {
 		assertThat(trackList.size(), equalTo(0));
 	}
 
+	@Test
+	public void testWithInvalidFile() throws IOException {
+		List<String> talks = readFile("testInvalidFile.txt");
+		List<Track> trackList = controller.getTrackList(talks);
+		assertThat(trackList.size(), equalTo(0));
+	}
+
 	private List<String> readFile(String fileName) throws FileNotFoundException, IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String file = classLoader.getResource(fileName).getFile();
