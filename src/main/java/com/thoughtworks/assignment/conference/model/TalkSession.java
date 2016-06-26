@@ -22,20 +22,23 @@ public class TalkSession extends Session {
 	}
 
 	public LocalTime getRealFinishTime() {
-		int talksDuration = this.talks.stream().mapToInt(Talk::getDuration).sum();
-		return this.getStart().plusMinutes(talksDuration);
+		if (this.talks != null) {
+			int talksDuration = this.talks.stream().mapToInt(Talk::getDuration).sum();
+			return this.getStart().plusMinutes(talksDuration);
+		}
+		return null;
 	}
 
 	public void scheduleTalks(List<Talk> talks) {
-		List<Talk> scheduledTalks = Knapsack.solve(this, talks);
-		updateTalks(talks, scheduledTalks);
+		List<Talk> selectedTalks = Knapsack.solve(this, talks);
+		updateTalks(talks, selectedTalks);
 	}
 
-	private void updateTalks(List<Talk> talks, List<Talk> scheduledTalks) {
+	private void updateTalks(List<Talk> talks, List<Talk> selectedTalks) {
 		// remove these talks from the original list
-		talks.removeAll(scheduledTalks);
-		calculateTalkStartTime(scheduledTalks);
-		setTalks(scheduledTalks);
+		talks.removeAll(selectedTalks);
+		calculateTalkStartTime(selectedTalks);
+		setTalks(selectedTalks);
 	}
 
 	private void calculateTalkStartTime(List<Talk> scheduledTalks) {
@@ -53,9 +56,11 @@ public class TalkSession extends Session {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		for (Talk talk : this.talks) {
-			sb.append(talk);
-			sb.append('\n');
+		if (this.talks != null) {
+			this.talks.forEach(talk -> {
+				sb.append(talk);
+				sb.append('\n');
+			});
 		}
 		return sb.toString();
 	}

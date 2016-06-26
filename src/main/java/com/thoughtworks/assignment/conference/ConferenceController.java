@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.thoughtworks.assignment.conference.model.Session;
 import com.thoughtworks.assignment.conference.model.Talk;
 import com.thoughtworks.assignment.conference.model.TalkSession;
 import com.thoughtworks.assignment.conference.model.Track;
@@ -19,32 +18,31 @@ public class ConferenceController {
 	private List<Talk> validTalks;
 
 	public List<Track> getTrackList(List<String> proposalsList) {
-
 		populateValidTalks(proposalsList);
 		List<Track> tracks = new ArrayList<Track>();
+		int trackCounter = 1;
 		while (!this.validTalks.isEmpty()) {
-			Track track = new Track();
+			Track track = new Track(trackCounter++);
 			tracks.add(track);
 
-			for (Session session : SessionHelper.getDefaultSessions()) {
+			SessionHelper.getDefaultSessions().forEach(session -> {
 				track.addSession(session);
 				if (session instanceof TalkSession) {
 					if (!this.validTalks.isEmpty()) {
 						((TalkSession) session).scheduleTalks(this.validTalks);
 					}
 				}
-			}
+			});
 		}
 		return tracks;
 	}
 
 	private void populateValidTalks(List<String> proposalsList) {
+		this.validTalks = new ArrayList<Talk>();
 		if (proposalsList == null || proposalsList.isEmpty()) {
 			return;
 		}
-
-		this.validTalks = new ArrayList<Talk>();
-		for (String talk : proposalsList) {
+		proposalsList.forEach(talk -> {
 			Pattern pattern = Pattern.compile("(.*)(\\s){1}([0-2]?[0-9]?[0-9]{1}min|lightning)\\b");
 			Matcher matcher = pattern.matcher(talk);
 			if (matcher.matches()) {
@@ -52,7 +50,7 @@ public class ConferenceController {
 				int talkDuration = extractTalkDuration(durationStr);
 				this.validTalks.add(new Talk(matcher.group(1), talkDuration));
 			}
-		}
+		});
 	}
 
 	private int extractTalkDuration(String durationStr) {

@@ -9,15 +9,13 @@ import org.apache.log4j.Logger;
 import com.thoughtworks.assignment.conference.model.Track;
 
 /**
- * TODO: criar README.
- * TODO: rever testes.
- * TODO:  rever codigo.
- * TODO: rever hora inicio networking
+ * TODO: criar README. TODO: rever testes. TODO: rever codigo. TODO: rever hora
+ * inicio networking
  */
 public class Conference {
 
-	final static Logger logger = Logger.getLogger(Conference.class);
-	
+	private static final Logger logger = Logger.getLogger(Conference.class);
+
 	public static void main(String[] args) {
 		if (args.length == 0 || args[0].isEmpty()) {
 			logger.error("Please, inform a file path to continue the execution!");
@@ -29,22 +27,20 @@ public class Conference {
 	public void execute(String fileName) {
 		try {
 			InputFileReader reader = new InputFileReader();
-			List<String> talks = reader.readFile(fileName);
+			List<String> proposalsList = reader.readFile(fileName);
 			ConferenceController conferenceController = new ConferenceController();
-			List<Track> trackList = conferenceController.getTrackList(talks);
+			List<Track> trackList = conferenceController.getTrackList(proposalsList);
 			printResults(trackList);
 		} catch (FileNotFoundException e) {
 			logger.error("File not found!", e);
 		} catch (IOException e) {
-			logger.error("Error to read the file!", e);
+			logger.error("Error reading the file!", e);
 		} catch (Exception e) {
 			logger.error("Sorry! Something wrong just happened. Please try again!", e);
 		}
 	}
-	
+
 	private void printResults(List<Track> trackList) {
-		for (Track track : trackList) {
-			logger.info(track);
-		}
+		trackList.forEach(t -> logger.info(t));
 	}
 }
