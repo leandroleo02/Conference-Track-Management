@@ -1,7 +1,5 @@
 # README #
 
-This README would normally document whatever steps are necessary to get your application up and running.
-
 Este README terá todos os passos necessários para compilar, testar e executar a aplicação.
 
 ### Problema: ###
@@ -25,11 +23,27 @@ Note that depending on how you choose to complete this problem, your solution ma
 
 ### Solução adotada ###
 
-Após analisar o problema, percebi que Sessions (com tempo disponível limitado) e Talks (com cada uma com um tempo de duração), se pareciam muito com mochilas e itens, respectivamente.
+Após analisar o problema, percebi que Sessions (com tempo disponível limitado) e *Talks* (com cada uma com um tempo de duração), se pareciam muito com mochilas e itens, respectivamente.
 
-Foi então que percebi que poderia utilizar a problemática do algoritmo da mochila, o famoso Knapsack algorithm.
+Foi então que percebi que poderia utilizar a problemática do algoritmo da mochila, o famoso *Knapsack algorithm*.
 
-### How do I get set up? ###
+Utilizei uma variação deste algoritmo, onde ao invés de me retornar o valor máximo possível que se pode adicionar à mochila, este me retorna o itens que poderiam ser adicionados à ela. Dessa forma, consigo selecionar as *Talks* que irão para a *Session*.
+
+O restante do modelo ficou bem simples e coeso com a proposta do problema.
+
+### Como configurar? ###
+
+Toda configuração da aplicação será feita via Maven. Neste caso será necessário tê-lo configurado na máquina.
+Caso não tenha, basta seguir as instruções no link abaixo:
+
+Maven site: https://maven.apache.org/
+
+Com o maven propriamente instalado e configurado no computador, basta seguir os passos a seguir:
+
+Serão mostradas 2 (duas) maneiras de compilar e executar a aplicação. A primeira, será utilizando o *maven exec*. Este basicamente executa uma classe que tenha o método *main*. 
+
+
+
 
 * Summary of set up
 * Configuration
