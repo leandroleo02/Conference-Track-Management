@@ -4,10 +4,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.assignment.conference.model.Track;
 
 /**
- * TODO: criar mensagem de erro. 
  * TODO: criar README.
  * TODO: rever testes.
  * TODO:  rever codigo.
@@ -15,9 +16,11 @@ import com.thoughtworks.assignment.conference.model.Track;
  */
 public class Conference {
 
+	final static Logger logger = Logger.getLogger(Conference.class);
+	
 	public static void main(String[] args) {
 		if (args.length == 0 || args[0].isEmpty()) {
-			// TODO: mensagem nome do arquivo não informado.
+			logger.error("Please, inform a file path to continue the execution!");
 		} else {
 			new Conference().execute(args[0]);
 		}
@@ -31,17 +34,17 @@ public class Conference {
 			List<Track> trackList = conferenceController.getTrackList(talks);
 			printResults(trackList);
 		} catch (FileNotFoundException e) {
-			// TODO: mensagem arquivo não encontrado
+			logger.error("File not found!", e);
 		} catch (IOException e) {
-			// TODO: falha ao ler arquivo
+			logger.error("Error to read the file!", e);
 		} catch (Exception e) {
-			// TODO: mensagem erro generico
+			logger.error("Sorry! Something wrong just happened. Please try again!", e);
 		}
 	}
 	
 	private void printResults(List<Track> trackList) {
 		for (Track track : trackList) {
-			System.out.println(track);
+			logger.info(track);
 		}
 	}
 }

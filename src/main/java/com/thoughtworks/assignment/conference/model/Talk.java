@@ -63,6 +63,6 @@ public class Talk {
 
 	@Override
 	public String toString() {
-		return String.format("%s %s %d min", start, title, duration);
+		return String.format("%s %s %dmin", start, title, duration);
 	}
 }
