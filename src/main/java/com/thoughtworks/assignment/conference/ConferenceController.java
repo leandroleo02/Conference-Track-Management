@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.log4j.Logger;
+
 import com.thoughtworks.assignment.conference.model.Talk;
 import com.thoughtworks.assignment.conference.model.TalkSession;
 import com.thoughtworks.assignment.conference.model.Track;
@@ -14,6 +16,9 @@ public class ConferenceController {
 	private static final String MINUTE_SUFFIX = "min";
 	private static final String LIGHTNING_SUFFIX = "lightning";
 	private static final int LIGHTNING_MINUTES = 5;
+	private static final int MAX_TALK_DURATION = 240;
+
+	private static final Logger logger = Logger.getLogger(ConferenceController.class);
 
 	private List<Talk> validTalks;
 
@@ -48,7 +53,8 @@ public class ConferenceController {
 			if (matcher.matches()) {
 				String durationStr = matcher.group(3);
 				int talkDuration = extractTalkDuration(durationStr);
-				this.validTalks.add(new Talk(matcher.group(1), talkDuration));
+				if (talkDuration > 0)
+					this.validTalks.add(new Talk(matcher.group(1), talkDuration));
 			}
 		});
 	}
@@ -56,7 +62,14 @@ public class ConferenceController {
 	private int extractTalkDuration(String durationStr) {
 		int talktime = 0;
 		if (durationStr.endsWith(MINUTE_SUFFIX)) {
-			talktime = Integer.parseInt(durationStr.substring(0, durationStr.indexOf(MINUTE_SUFFIX)));
+			try {
+				talktime = Integer.parseInt(durationStr.substring(0, durationStr.indexOf(MINUTE_SUFFIX)));
+				if (talktime > MAX_TALK_DURATION) {
+					logger.info("Talk time " + talktime + " to long");
+				}
+			} catch (NumberFormatException e) {
+				logger.info(e);
+			}
 		} else if (durationStr.endsWith(LIGHTNING_SUFFIX)) {
 			talktime = LIGHTNING_MINUTES;
 		}

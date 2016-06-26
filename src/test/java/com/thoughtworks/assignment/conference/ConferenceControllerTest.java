@@ -41,7 +41,14 @@ public class ConferenceControllerTest {
 		List<Track> trackList = controller.getTrackList(talks);
 		assertThat(trackList.size(), equalTo(0));
 	}
-
+	
+	@Test
+	public void testWithTalksToLong() throws IOException {
+		List<String> talks = readFile("testProposalsTalksToLong.txt");
+		List<Track> trackList = controller.getTrackList(talks);
+		assertThat(trackList.size(), equalTo(2));
+	}
+	
 	private List<String> readFile(String fileName) throws FileNotFoundException, IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		String file = classLoader.getResource(fileName).getFile();

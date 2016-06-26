@@ -3,6 +3,7 @@ package com.thoughtworks.assignment.conference;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.thoughtworks.assignment.conference.model.Session;
 import com.thoughtworks.assignment.conference.model.Talk;
@@ -14,14 +15,16 @@ public class Knapsack {
 
 	public static List<Talk> solve(Session session, List<Talk> talks) {
 		int maxWeight = (int) Duration.between(session.getStart(), session.getFinish()).toMinutes();
-		int numItems = talks.size();
+		
+		List<Talk> validTalks = getValidTalks(talks, maxWeight);
+		int numItems = validTalks.size();
 
 		int[] value = new int[numItems + 1];
 		int[] weight = new int[numItems + 1];
 
 		int i = 1;
 		// fill the profit and weight
-		for (Talk talk : talks) {
+		for (Talk talk : validTalks) {
 			value[i] = weight[i] = talk.getDuration();
 			i++;
 		}
@@ -31,11 +34,15 @@ public class Knapsack {
 		if (elementsUsed.length > 0) {
 			scheduleTalks = new ArrayList<>();
 			for (int index : elementsUsed) {
-				Talk talk = talks.get(index - 1);
+				Talk talk = validTalks.get(index - 1);
 				scheduleTalks.add(talk);
 			}
 		}
 		return scheduleTalks;
+	}
+	
+	private static List<Talk> getValidTalks(List<Talk> talks, int maxWeight) {
+		return talks.stream().filter(t -> t.getDuration() <= maxWeight).collect(Collectors.toList());
 	}
 
 	/**
