@@ -20,4 +20,11 @@ public class TrackTest {
 		assertThat("Track sessions should have size 1",track.getSessions().size(), equalTo(1));
 		assertThat(track.getSessions().get(0), equalTo(morningSession));
 	}
+	
+	@Test
+	public void testGetSetId() {
+		Track track = new Track();
+		track.setId(344);
+		assertThat(track.getId(), equalTo(344));
+	}
 }
