@@ -23,7 +23,7 @@ Note that depending on how you choose to complete this problem, your solution ma
 
 ### Solução adotada ###
 
-Após analisar o problema, percebi que Sessions (com tempo disponível limitado) e *Talks* (com cada uma com um tempo de duração), se pareciam muito com mochilas e itens, respectivamente.
+Após analisar o problema, percebi que *Sessions* (com tempo disponível limitado) e *Talks* (com cada uma com um tempo de duração), se pareciam muito com mochilas e itens, respectivamente.
 
 Foi então que percebi que poderia utilizar a problemática do algoritmo da mochila, o famoso *Knapsack algorithm*.
 
@@ -73,12 +73,12 @@ Vá a pasta *target*, o arquivo *conference-track-management-1.0-jar-with-depend
 
 Então, basta executar o comando:
 
-*java -jar conference-track-management-1.0-jar-with-dependencies.jar pathFile*
+*java -jar conference-track-management-1.0-jar-with-dependencies.jar "pathFile"* (pathFile sem as aspas)
 
 ### Como executar os testes? ###
 
 Para executar os testes é bem simples.
-Dentro do diretório root da aplicação, execute o seguinte comando:
+Dentro do diretório *root* da aplicação, execute o seguinte comando:
 
 *mvn test*
 
