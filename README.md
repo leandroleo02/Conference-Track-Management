@@ -40,25 +40,50 @@ Maven site: https://maven.apache.org/
 
 Com o maven propriamente instalado e configurado no computador, basta seguir os passos a seguir:
 
-Serão mostradas 2 (duas) maneiras de compilar e executar a aplicação. A primeira, será utilizando o *maven exec*. Este basicamente executa uma classe que tenha o método *main*. 
+Serão mostradas 2 (duas) maneiras de compilar e executar a aplicação. 
 
+1. Utilizando o *maven exec*. Este basicamente executa uma classe que tenha o método *main* via linha de comando.
+2. Utilizando o comando *java -jar*.
 
+Então vamos lá. Primeiramente, acesse o diretório *root* da aplicação através da linha de comando. Possivelmente, o nome será *conference-track-management*.
 
+**Uma vez dentro do projeto, vamos a primeira forma.**
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+Primeiro, compile o projeto:
 
-### Contribution guidelines ###
+*mvn compile*
 
-* Writing tests
-* Code review
-* Other guidelines
+Após a compilação, basta executar com o comando abaixo:
 
-### Who do I talk to? ###
+*mvn exec:java -Dexec.mainClass="com.thoughtworks.assignment.conference.Conference" -Dexec.args="pathFile"*  
 
-* Repo owner or admin
-* Other community or team contact
+**Importante, caso o primeiro passo não seja feito, a execução não funcionará.**
+
+**Agora, vamos a segunda maneira (java -jar)**
+
+Para executar a aplicação desta maneira, será necessário gerar um *build* da aplicação, e não somente compila-la.
+
+Para tanto, execute o seguinte comando:
+
+*mvn clean install*
+
+Após isso, a aplicação será compilada, os testes serão executados e um *jar* será criado.
+
+Vá a pasta *target*, o arquivo *conference-track-management-1.0-jar-with-dependencies.jar* deverá estar lá.
+
+Então, basta executar o comando:
+
+*java -jar conference-track-management-1.0-jar-with-dependencies.jar pathFile*
+
+### Como executar os testes? ###
+
+Para executar os testes é bem simples.
+Dentro do diretório root da aplicação, execute o seguinte comando:
+
+*mvn test*
+
+Fim
+
+Obrigado!
+
+Leandro.
