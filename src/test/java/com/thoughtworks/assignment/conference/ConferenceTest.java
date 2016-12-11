@@ -6,8 +6,7 @@ public class ConferenceTest {
 
 	@Test
 	public void test() {
-		ClassLoader classLoader = getClass().getClassLoader();
-		String file = classLoader.getResource("testProposalsTalks.txt").getFile();
+		String file = getClass().getClassLoader().getResource("testProposalsTalks.txt").getFile();
 		
 		new Conference().execute(file);
 	}

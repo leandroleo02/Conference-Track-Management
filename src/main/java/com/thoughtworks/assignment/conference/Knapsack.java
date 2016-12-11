@@ -28,7 +28,7 @@ public class Knapsack {
 			value[i] = weight[i] = talk.getDuration();
 			i++;
 		}
-		int[] elementsUsed = Knapsack.knapsack(maxWeight, weight, value, numItems);
+		int[] elementsUsed = knapsack(maxWeight, weight, value, numItems);
 
 		List<Talk> scheduleTalks = null;
 		if (elementsUsed.length > 0) {
@@ -62,7 +62,9 @@ public class Knapsack {
 		int[][] knapsack = new int[numItems + 1][maxWeight + 1];
 
 		for (int k = 1; k <= numItems; k++) {
+			// System.out.println(maxWeight + " >= " + weight[k]);
 			for (int w = maxWeight; w >= weight[k]; w--) {
+				// System.out.println("values[k] + knapsack[k - 1][w - weight[k]] > knapsack[k - 1][w] = " + values[k] + knapsack[k - 1][w - weight[k]] + " > " + knapsack[k - 1][w]);
 				if (values[k] + knapsack[k - 1][w - weight[k]] > knapsack[k - 1][w])
 					knapsack[k][w] = values[k] + knapsack[k - 1][w - weight[k]];
 				else
@@ -72,6 +74,7 @@ public class Knapsack {
 				knapsack[k][w] = knapsack[k - 1][w];
 			}
 		}
+		
 		return getUsedItems(knapsack, weight, values, numItems, maxWeight);
 	}
 

@@ -28,6 +28,58 @@ public class KnapsackTest {
 	}
 	
 	@Test
+	public void testSmallKnapsack1() {
+		int val[] = new int[] {0, 2, 3, 4 };
+		int wt[] = new int[] {0, 2, 3, 4 };
+		int W = 5;
+		int n = val.length - 1;
+
+		int[] expected = { 2, 1 };
+
+		assertThat(Knapsack.knapsack(W, wt, val, n), equalTo(expected));
+	}
+	
+	@Test
+	public void testSmallKnapsack() {
+		int val[] = new int[] {2, 3, 4 };
+		int wt[] = new int[] {2, 3, 4 };
+		int W = 5;
+		int n = val.length;
+
+		// int[] expected = { 2, 1 };
+		int expected = 5;
+
+		assertThat(knapSack(W, wt, val, n), equalTo(expected));
+	}
+	
+	private int knapSack(int W, int wt[], int val[], int n) {
+		int i, w;
+		int K[][] = new int[n + 1][W + 1];
+
+		// Build table K[][] in bottom up manner
+		for (i = 0; i <= n; i++) {
+			for (w = 0; w <= W; w++) {
+				if (i == 0 || w == 0)
+					K[i][w] = 0;
+				else if (wt[i - 1] <= w)
+					K[i][w] = Math.max(val[i - 1] + K[i - 1][w - wt[i - 1]], K[i - 1][w]);
+				else
+					K[i][w] = K[i - 1][w];
+			}
+		}
+		
+		for(int kk = 0;kk<n + 1;kk++) {
+			for(int j = 0;j<W + 1;j++) {
+				System.out.print(K[kk][j]);
+				System.out.print(" ");
+			}
+			System.out.println();
+		}
+
+		return K[n][W];
+	}
+	
+	@Test
 	public void testKnapsack1Item() {
 		int val[] = new int[] { 0, 60 };
 		int wt[] = new int[] { 0, 60 };

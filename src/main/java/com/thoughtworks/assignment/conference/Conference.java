@@ -8,10 +8,6 @@ import org.apache.log4j.Logger;
 
 import com.thoughtworks.assignment.conference.model.Track;
 
-/**
- * TODO: rever testes. 
- * TODO: rever codigo. 
- */
 public class Conference {
 
 	private static final Logger logger = Logger.getLogger(Conference.class);

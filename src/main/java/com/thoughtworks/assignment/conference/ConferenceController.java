@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
 
+import com.thoughtworks.assignment.conference.model.Session;
 import com.thoughtworks.assignment.conference.model.Talk;
 import com.thoughtworks.assignment.conference.model.TalkSession;
 import com.thoughtworks.assignment.conference.model.Track;
@@ -26,11 +27,12 @@ public class ConferenceController {
 		populateValidTalks(proposalsList);
 		List<Track> tracks = new ArrayList<Track>();
 		int trackCounter = 1;
+		List<Session> sessions = SessionHelper.getSessions();
 		while (!this.validTalks.isEmpty()) {
 			Track track = new Track(trackCounter++);
 			tracks.add(track);
 
-			SessionHelper.getDefaultSessions().forEach(session -> {
+			sessions.forEach(session -> {
 				track.addSession(session);
 				if (session instanceof TalkSession) {
 					if (!this.validTalks.isEmpty()) {
@@ -48,7 +50,7 @@ public class ConferenceController {
 			return;
 		}
 		proposalsList.forEach(talk -> {
-			Pattern pattern = Pattern.compile("(.*)(\\s){1}([0-2]?[0-9]?[0-9]{1}min|lightning)\\b");
+			Pattern pattern = Pattern.compile(String.format("([^0-9]*)(\\s){1}([0-2]?[0-9]?[0-9]{1}%s|%s)\\b", MINUTE_SUFFIX, LIGHTNING_SUFFIX));
 			Matcher matcher = pattern.matcher(talk);
 			if (matcher.matches()) {
 				String durationStr = matcher.group(3);
