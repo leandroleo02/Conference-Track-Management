@@ -6,7 +6,7 @@ import java.util.Properties;
 
 public final class SessionConfigFileReader {
 
-	private static final String SESSION_CONFIG_FILE = "/sessionConfig.propertiess";
+	private static final String SESSION_CONFIG_FILE = "/sessionConfig.properties";
 
 	private static SessionConfigFileReader instance;
 
