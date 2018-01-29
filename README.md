@@ -1,6 +1,6 @@
 # README #
 
-Este README terá todos os passos necessários para compilar, testar e executar a aplicação....
+Este README terá todos os passos necessários para compilar, testar e executar a aplicação.
 
 ### Problema: ###
 
